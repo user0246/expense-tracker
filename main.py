@@ -28,17 +28,33 @@ def create_expenses_json(data):
 
 def add_expense(description, amount):
     nowtime = datetime.now().isoformat() 
-    id = generate_id()
+    ex_id = generate_id()
 
     entry_data = check_up()
 
     entry_data.append({
-        'id': id,
+        'id': ex_id,
         'date': nowtime,
         'description': description,
         'amount': amount
     }) 
 
     create_expenses_json(entry_data)    
+    print(f"Expense added (ID: {id})")
 
-add_expense("jopa2", 20)
+def update_expense_desc(ex_id, description):
+    data_to_update = check_up() 
+    for expense in data_to_update:
+        if expense["id"] == ex_id:
+            expense['description'] = description
+    create_expenses_json(data_to_update)
+
+def update_expense_mount(ex_id, amount):
+    data_to_update = check_up() 
+    for expense in data_to_update:
+        if expense["id"] == ex_id:
+            expense['amount'] = amount 
+    create_expenses_json(data_to_update)   
+
+update_expense_desc(1, "haha")
+update_expense_mount(1, 3000)
